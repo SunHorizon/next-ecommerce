@@ -19,8 +19,9 @@ const NavIcons = () => {
     const handleProfile = () =>{
         if(!isLoggedIn){
             router.push("/login");
+        }else{
+            setIsProfileOpen(!isProfileOpen);
         }
-        setIsProfileOpen(!isProfileOpen);
     }
 
     return (
