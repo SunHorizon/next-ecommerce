@@ -22,6 +22,10 @@ const NavIcons = () => {
         }else{
             setIsProfileOpen(!isProfileOpen);
         }
+        // if(!isLoggedIn){
+        //     router.push("/login");
+        // }
+        // setIsProfileOpen(!isProfileOpen);
     }
 
     return (
