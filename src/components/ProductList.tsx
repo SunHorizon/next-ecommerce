@@ -3,8 +3,9 @@ import Link from "next/link"
 import { myWixClientServer } from "@/lib/wixClientServer"
 import { products } from "@wix/stores"
 import DOMPurify from "isomorphic-dompurify"
+import Pagination from "./Pagination"
 
-const PRODUCT_PER_PAGE = 20
+const PRODUCT_PER_PAGE = 8
 
 const ProductList = async ({
     catogoryId, 
@@ -26,7 +27,8 @@ const ProductList = async ({
     .gt('priceData.price', searchParams?.min || 0)
     .lt('priceData.price', searchParams?.max || 99999)
     .limit(limit || PRODUCT_PER_PAGE)
-
+    .skip(searchParams?.page ? parseInt(searchParams.page) * (limit || PRODUCT_PER_PAGE) : 0)
+    
     if(searchParams?.sort){
         const [sortType, sortBy] = searchParams?.sort.split(" ");
         if(sortType === 'asc'){
@@ -79,6 +81,7 @@ const ProductList = async ({
                     <button className="rounded-2xl ring-1 ring-SHOP w-max text-SHOP py-2 px-2 text-xs hover:bg-SHOP hover:text-white ">Add to cart</button>
                 </Link>
             ))}
+            <Pagination currentPage={res.currentPage || 0} hasPrev={res.hasPrev()} hasNext={res.hasNext()} />
         </div>
     )
 }
