@@ -53,14 +53,14 @@ const LoginPage = () => {
       switch(mode){
         case Mode.LOGIN: 
           response = await wixClient.auth.login({
-            email: email,
-            password: password,
+            email,
+            password,
           });
           break;
         case Mode.REGISTER: 
           response = await wixClient.auth.register({
-            email: email,
-            password: password,
+            email,
+            password,
             profile:{nickname: username}
           });
           break;
@@ -84,12 +84,16 @@ const LoginPage = () => {
 
       switch(response?.loginState){
         case LoginState.SUCCESS:
-          setMessage("Successful! You are being redirected.")
-          console.log(response.data.sessionToken)
-          const tokens = await wixClient.auth.getMemberTokensForDirectLogin(response.data.sessionToken);
-          wixClient.auth.setTokens(tokens)
-          Cookies.set('refreshToken', JSON.stringify(tokens.refreshToken));
-          router.push('/');
+          setMessage("Successful! You are being redirected.");
+          const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
+            response.data.sessionToken!
+          );
+
+          Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
+            expires: 2,
+          });
+          wixClient.auth.setTokens(tokens);
+          router.push("/");
           break;
         case LoginState.FAILURE:
           if(response.errorCode === 'invalidEmail' || response.errorCode === 'invalidPassword'){
@@ -111,7 +115,6 @@ const LoginPage = () => {
             break;
 
       }
-
     }catch(err){
       console.log(err)
       setError("Something went wrong!")
@@ -119,7 +122,6 @@ const LoginPage = () => {
       
       setIsLoading(false);
     }
-
   }
 
   

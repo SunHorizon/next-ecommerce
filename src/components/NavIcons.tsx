@@ -3,10 +3,11 @@
 import Image from "next/image"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import CartModel from "./CartModel";
 import { useWixClient } from "@/hooks/useWixclient";
 import Cookies from "js-cookie";
+import { useCartStore } from "@/hooks/useCartStore";
 
 
 const NavIcons = () => {
@@ -34,6 +35,12 @@ const NavIcons = () => {
         router.push(logoutUrl);
     }
 
+    const {cart, counter, getCart} = useCartStore();
+
+    useEffect(()=>{
+        getCart(wixClient);
+    },[wixClient, getCart])
+
     return (
         <div className="flex items-center gap-4 xl:gap-6 relative">
             <Image 
@@ -57,7 +64,7 @@ const NavIcons = () => {
                 width={22}
                 height={22}             
                 />
-                <div className="absolute -top-4 -right-4 w-6 h-6 bg-SHOP rounded-full text-white text-sm flex items-center justify-center">2</div>
+                <div className="absolute -top-4 -right-4 w-6 h-6 bg-SHOP rounded-full text-white text-sm flex items-center justify-center">{counter}</div>
             </div>
             {isCartOpen &&  <CartModel /> }
         </div>

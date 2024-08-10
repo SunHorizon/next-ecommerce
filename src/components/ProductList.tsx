@@ -81,7 +81,9 @@ const ProductList = async ({
                     <button className="rounded-2xl ring-1 ring-SHOP w-max text-SHOP py-2 px-2 text-xs hover:bg-SHOP hover:text-white ">Add to cart</button>
                 </Link>
             ))}
-            <Pagination currentPage={res.currentPage || 0} hasPrev={res.hasPrev()} hasNext={res.hasNext()} />
+           {searchParams?.cat || searchParams?.name ? <Pagination 
+           currentPage={res.currentPage || 0} hasPrev={res.hasPrev()} hasNext={res.hasNext()} />
+            : null}
         </div>
     )
 }

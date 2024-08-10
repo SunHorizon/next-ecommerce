@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@wix/ecom": "^1.0.685",
+    "@wix/redirects": "^1.0.51",
     "@wix/sdk": "^1.12.10",
     "@wix/stores": "^1.0.169",
     "install": "^0.13.0",
@@ -18,7 +19,8 @@
     "next": "14.2.2",
     "npm": "^10.8.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
